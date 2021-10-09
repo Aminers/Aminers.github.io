@@ -6,13 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives: 2021/10 | Hexo</title>
+  <title>古典密码Caesar,Playfair,Hill加密解密的实现 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/archives/2021/10/index.html">
+  <meta name="description" content="Caesar密码：  加密：根据字母在ascii码的顺序，把字符串偏移k位，把26个字母编号位0~25时，(编号+k)%26就能得到他偏移后的字母编号。 解密：把k取负数再做一次加密即可。负数取模为((编号-k)%26+26)%26。  playfair密码：  加密：加密是两个相邻的字母为一组，按密钥矩阵加密的。   1.按输入的密钥填充好矩阵。   2.然后对字符串分成两个两个一组，遇到两个重">
+<meta property="og:type" content="article">
+<meta property="og:title" content="古典密码Caesar,Playfair,Hill加密解密的实现">
+<meta property="og:url" content="http://example.com/2021/10/09/%E5%8F%A4%E5%85%B8%E5%AF%86%E7%A0%81Caesar-Playfair-Hill%E5%8A%A0%E5%AF%86%E8%A7%A3%E5%AF%86%E7%9A%84%E5%AE%9E%E7%8E%B0/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Caesar密码：  加密：根据字母在ascii码的顺序，把字符串偏移k位，把26个字母编号位0~25时，(编号+k)%26就能得到他偏移后的字母编号。 解密：把k取负数再做一次加密即可。负数取模为((编号-k)%26+26)%26。  playfair密码：  加密：加密是两个相邻的字母为一组，按密钥矩阵加密的。   1.按输入的密钥填充好矩阵。   2.然后对字符串分成两个两个一组，遇到两个重">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-10-09T07:23:22.000Z">
+<meta property="article:modified_time" content="2021-10-09T07:24:23.422Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -150,103 +154,210 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-古典密码Caesar-Playfair-Hill加密解密的实现" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      古典密码Caesar,Playfair,Hill加密解密的实现
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2021" class="archive-year">2021</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/10/09/%E5%8F%A4%E5%85%B8%E5%AF%86%E7%A0%81Caesar-Playfair-Hill%E5%8A%A0%E5%AF%86%E8%A7%A3%E5%AF%86%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
+
+        
+        <a href="/2021/10/09/%E5%8F%A4%E5%85%B8%E5%AF%86%E7%A0%81Caesar-Playfair-Hill%E5%8A%A0%E5%AF%86%E8%A7%A3%E5%AF%86%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
   	<time datetime="2021-10-09T07:23:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-10-09</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/10/09/%E5%8F%A4%E5%85%B8%E5%AF%86%E7%A0%81Caesar-Playfair-Hill%E5%8A%A0%E5%AF%86%E8%A7%A3%E5%AF%86%E7%9A%84%E5%AE%9E%E7%8E%B0/">古典密码Caesar,Playfair,Hill加密解密的实现</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Caesar密码：</p>
+<ul>
+<li>加密：根据字母在ascii码的顺序，把字符串偏移k位，把26个字母编号位0~25时，(编号+k)%26就能得到他偏移后的字母编号。</li>
+<li>解密：把k取负数再做一次加密即可。负数取模为((编号-k)%26+26)%26。</li>
+</ul>
+<p>playfair密码：</p>
+<ul>
+<li>加密：加密是两个相邻的字母为一组，按密钥矩阵加密的。</li>
+</ul>
+<blockquote>
+<p>1.按输入的密钥填充好矩阵。</p>
+</blockquote>
+<blockquote>
+<p>2.然后对字符串分成两个两个一组，遇到两个重复的就在中间插入任意一个字母。最后不足两个字母也是用任意一个字母补足。</p>
+<p>比如klll分组成kl  lx  lx。</p>
+</blockquote>
+<blockquote>
+<p>3.每组的两个字母，同行则都用其右侧字母替换，同列则用其下面的字母替换，不同行也不同列，则根据这两个字母所在的矩形的4个角，用另外两个字母代替。</p>
+</blockquote>
+<ul>
+<li>解密：解密相当于反向再做一次加密，也就是原来用右侧替换的，解密用左侧。</li>
+</ul>
+<p>（要解密的字符串长度应该是偶数，不然不合法）</p>
+<p>Hill密码：</p>
+<ul>
+<li>加密：用一个加密矩阵和字符串做乘法，以达到加密效果。</li>
+</ul>
+<blockquote>
+<p>1.输入n阶可逆的密钥矩阵。（判断可逆：余子式求行列式，若值不为0则有逆矩阵）</p>
+</blockquote>
+<blockquote>
+<p>2.把字符串分成x个长度为n的子串（字符串不够长则用最后一个字母填充），把字符串转换成x*n的以字母编号的矩阵。</p>
+</blockquote>
+<blockquote>
+<p>3.字符串矩阵和密钥矩阵相乘，得到的矩阵再转换成字符串，就得到了加密的字符串。</p>
+</blockquote>
+<ul>
+<li>解密：在加密基础上，把解密字符串矩阵和密钥的逆矩阵相乘即可得到解密的字符串。</li>
+</ul>
+<blockquote>
+<p>求矩阵的逆矩阵，可以用把原矩阵增广一个单位矩阵，用高斯消元把左边矩阵化成单元矩阵，右边的就是他的逆矩阵。</p>
+</blockquote>
+<p>Caesar密码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    string s;<span class="keyword">char</span> op=<span class="string">&#x27;x&#x27;</span>;</span><br><span class="line">    <span class="keyword">int</span> key;</span><br><span class="line">    <span class="keyword">do</span>&#123;</span><br><span class="line">        cout&lt;&lt;<span class="string">&quot;加密输入e,解密输入d:&quot;</span>&lt;&lt;endl;</span><br><span class="line">        cin&gt;&gt;op;</span><br><span class="line">        <span class="keyword">if</span>(op==<span class="string">&#x27;e&#x27;</span>)&#123;</span><br><span class="line">            cout&lt;&lt;<span class="string">&quot;请输入你的字符串：&quot;</span>&lt;&lt;endl;</span><br><span class="line">            cin&gt;&gt;s;</span><br><span class="line">            cout&lt;&lt;<span class="string">&quot;请输入你的密钥：&quot;</span>&lt;&lt;endl;</span><br><span class="line">            cin&gt;&gt;key;</span><br><span class="line">            key%=<span class="number">26</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">auto</span> &amp;x:s)&#123;</span><br><span class="line">                <span class="keyword">if</span>(x&gt;=<span class="string">&#x27;A&#x27;</span>&amp;&amp;x&lt;=<span class="string">&#x27;Z&#x27;</span>) x=(x-<span class="string">&#x27;A&#x27;</span>+key)%<span class="number">26</span>+<span class="string">&#x27;A&#x27;</span>;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(x&gt;=<span class="string">&#x27;a&#x27;</span>&amp;&amp;x&lt;=<span class="string">&#x27;z&#x27;</span>) x=(x-<span class="string">&#x27;a&#x27;</span>+key)%<span class="number">26</span>+<span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            cout&lt;&lt;<span class="string">&quot;加密后的字符串为:&quot;</span>&lt;&lt;endl;</span><br><span class="line">            cout&lt;&lt;s&lt;&lt;endl;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(op==<span class="string">&#x27;d&#x27;</span>)&#123;</span><br><span class="line">            cout&lt;&lt;<span class="string">&quot;请输入你的字符串：&quot;</span>&lt;&lt;endl;</span><br><span class="line">            cin&gt;&gt;s;</span><br><span class="line">            cout&lt;&lt;<span class="string">&quot;请输入你的密钥：&quot;</span>&lt;&lt;endl;</span><br><span class="line">            cin&gt;&gt;key;</span><br><span class="line">            key%=<span class="number">26</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">auto</span> &amp;x:s)&#123;</span><br><span class="line">                <span class="keyword">if</span>(x&gt;=<span class="string">&#x27;A&#x27;</span>&amp;&amp;x&lt;=<span class="string">&#x27;Z&#x27;</span>) x=(x-<span class="string">&#x27;A&#x27;</span>-key+<span class="number">26</span>)%<span class="number">26</span>+<span class="string">&#x27;A&#x27;</span>;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(x&gt;=<span class="string">&#x27;a&#x27;</span>&amp;&amp;x&lt;=<span class="string">&#x27;z&#x27;</span>) x=(x-<span class="string">&#x27;a&#x27;</span>-key+<span class="number">26</span>)%<span class="number">26</span>+<span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            cout&lt;&lt;<span class="string">&quot;解密后的字符串为:&quot;</span>&lt;&lt;endl;</span><br><span class="line">            cout&lt;&lt;s&lt;&lt;endl;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            cout&lt;&lt;<span class="string">&quot;没有找到你的要求&quot;</span>&lt;&lt;endl;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">while</span>(!(op==<span class="string">&#x27;e&#x27;</span>||op==<span class="string">&#x27;d&#x27;</span>));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
-          
 
+
+<p>Playfair密码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">char</span> matx[<span class="number">5</span>][<span class="number">5</span>];</span><br><span class="line"><span class="keyword">bool</span> used[<span class="number">26</span>];</span><br><span class="line"><span class="keyword">int</span> row[<span class="number">26</span>],col[<span class="number">26</span>];</span><br><span class="line">string s,fills,ans;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fillmat</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">memset</span>(used,<span class="number">0</span>,<span class="keyword">sizeof</span> used);</span><br><span class="line">    <span class="keyword">int</span> r=<span class="number">0</span>,c=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> x:s)&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="string">&#x27;A&#x27;</span>&lt;=x&amp;&amp;x&lt;=<span class="string">&#x27;Z&#x27;</span>) x=x-<span class="string">&#x27;A&#x27;</span>+<span class="string">&#x27;a&#x27;</span>;<span class="comment">//大写转小写</span></span><br><span class="line">        <span class="keyword">if</span>(x==<span class="string">&#x27;j&#x27;</span>) x=<span class="string">&#x27;i&#x27;</span>;<span class="comment">//i和j等同</span></span><br><span class="line">        <span class="keyword">if</span>(!used[x-<span class="string">&#x27;a&#x27;</span>])&#123;</span><br><span class="line">            matx[r][c]=x;<span class="comment">//填充</span></span><br><span class="line">            row[x-<span class="string">&#x27;a&#x27;</span>]=r;col[x-<span class="string">&#x27;a&#x27;</span>]=c;</span><br><span class="line">            used[x-<span class="string">&#x27;a&#x27;</span>]=<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span>(c==<span class="number">4</span>) r++,c=<span class="number">0</span>;</span><br><span class="line">            <span class="keyword">else</span> c++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(r==<span class="number">5</span>) <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(r&lt;<span class="number">5</span>)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">25</span>;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(!used[i])&#123;</span><br><span class="line">                matx[r][c]=<span class="string">&#x27;a&#x27;</span>+i;<span class="comment">//填充</span></span><br><span class="line">                row[i]=r;col[i]=c;</span><br><span class="line">                used[i]=<span class="number">1</span>;</span><br><span class="line">                <span class="keyword">if</span>(c==<span class="number">4</span>) r++,c=<span class="number">0</span>;</span><br><span class="line">                <span class="keyword">else</span> c++;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">void pmmat()&#123;//打印矩阵</span></span><br><span class="line"><span class="comment">    for(int i=0;i&lt;5;i++)&#123;</span></span><br><span class="line"><span class="comment">        for(int j=0;j&lt;5;j++) cout&lt;&lt;matx[i][j]&lt;&lt;&quot; \n&quot;[j==4];</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fillstr</span><span class="params">()</span></span>&#123;</span><br><span class="line">    fills.<span class="built_in">clear</span>();</span><br><span class="line">    <span class="keyword">int</span> n=s.<span class="built_in">size</span>();</span><br><span class="line">    <span class="keyword">int</span> len=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(i&amp;&amp;(len%<span class="number">2</span>!=<span class="number">0</span>)&amp;&amp;s[i]==s[i<span class="number">-1</span>]) </span><br><span class="line">        fills.<span class="built_in">push_back</span>(<span class="string">&#x27;i&#x27;</span>),fills.<span class="built_in">push_back</span>(s[i]),len+=<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">else</span> fills.<span class="built_in">push_back</span>(s[i]),len++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(len%<span class="number">2</span>!=<span class="number">0</span>) fills.<span class="built_in">push_back</span>(<span class="string">&#x27;i&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">replace</span><span class="params">(<span class="keyword">char</span> &amp;x,<span class="keyword">char</span> &amp;y,<span class="keyword">int</span> op)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> idx,idy,disx,disy;</span><br><span class="line">    <span class="keyword">if</span>(<span class="string">&#x27;A&#x27;</span>&lt;=x&amp;&amp;x&lt;=<span class="string">&#x27;Z&#x27;</span>) idx=x-<span class="string">&#x27;A&#x27;</span>; <span class="keyword">else</span> idx=x-<span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">    <span class="keyword">if</span>(<span class="string">&#x27;A&#x27;</span>&lt;=y&amp;&amp;y&lt;=<span class="string">&#x27;Z&#x27;</span>) idy=y-<span class="string">&#x27;A&#x27;</span>; <span class="keyword">else</span> idy=y-<span class="string">&#x27;a&#x27;</span>;  </span><br><span class="line">    <span class="keyword">if</span>(row[idx]==row[idy])&#123;<span class="comment">//同一行，加密用右边的替换</span></span><br><span class="line">        disx=matx[row[idx]][(col[idx]+op)%<span class="number">5</span>]-matx[row[idx]][col[idx]];</span><br><span class="line">        disy=matx[row[idy]][(col[idy]+op)%<span class="number">5</span>]-matx[row[idy]][col[idy]];</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(col[idx]==col[idy])&#123;<span class="comment">//同一列，加密用下方替换</span></span><br><span class="line">        disx=matx[(row[idx]+op)%<span class="number">5</span>][col[idx]]-matx[row[idx]][col[idx]];</span><br><span class="line">        disy=matx[(row[idy]+op)%<span class="number">5</span>][col[idy]]-matx[row[idy]][col[idy]];</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        disx=matx[row[idy]][col[idx]]-matx[row[idx]][col[idx]];</span><br><span class="line">        disy=matx[row[idx]][col[idy]]-matx[row[idy]][col[idy]];</span><br><span class="line">    &#125;</span><br><span class="line">    x+=disx,y+=disy;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> op=<span class="string">&#x27;x&#x27;</span>;</span><br><span class="line">    <span class="keyword">do</span>&#123;</span><br><span class="line">        cout&lt;&lt;<span class="string">&quot;加密输入e,解密输入d:&quot;</span>&lt;&lt;endl;</span><br><span class="line">        cin&gt;&gt;op;</span><br><span class="line">        <span class="keyword">if</span>(op==<span class="string">&#x27;e&#x27;</span>)&#123;</span><br><span class="line">            cout&lt;&lt;<span class="string">&quot;请输入密钥&quot;</span>&lt;&lt;endl;</span><br><span class="line">            cin&gt;&gt;s;</span><br><span class="line">            <span class="built_in">fillmat</span>();</span><br><span class="line">            <span class="comment">//pmmat();查看矩阵</span></span><br><span class="line">            cout&lt;&lt;<span class="string">&quot;请输入要加密的字符串&quot;</span>&lt;&lt;endl;</span><br><span class="line">            cin&gt;&gt;s;</span><br><span class="line">            <span class="built_in">fillstr</span>();<span class="comment">//填充字符串</span></span><br><span class="line">            <span class="keyword">int</span> n=fills.<span class="built_in">size</span>();</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i+=<span class="number">2</span>) <span class="built_in">replace</span>(fills[i],fills[i+<span class="number">1</span>],<span class="number">1</span>);</span><br><span class="line">            cout&lt;&lt;<span class="string">&quot;加密后的字符串为：&quot;</span>&lt;&lt;endl;</span><br><span class="line">            cout&lt;&lt;fills&lt;&lt;endl;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(op==<span class="string">&#x27;d&#x27;</span>)&#123;</span><br><span class="line">            cout&lt;&lt;<span class="string">&quot;请输入密钥&quot;</span>&lt;&lt;endl;</span><br><span class="line">            cin&gt;&gt;s;</span><br><span class="line">            <span class="built_in">fillmat</span>();</span><br><span class="line">            cout&lt;&lt;<span class="string">&quot;请输入要解密的字符串&quot;</span>&lt;&lt;endl;</span><br><span class="line">            cin&gt;&gt;s;</span><br><span class="line">            <span class="keyword">if</span>(s.<span class="built_in">size</span>()%<span class="number">2</span>!=<span class="number">0</span>)&#123;</span><br><span class="line">                cout&lt;&lt;<span class="string">&quot;解密字符串长度应为偶数&quot;</span>&lt;&lt;endl;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">int</span> n=s.<span class="built_in">size</span>();</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i+=<span class="number">2</span>) <span class="built_in">replace</span>(s[i],s[i+<span class="number">1</span>],<span class="number">-1</span>);</span><br><span class="line">            cout&lt;&lt;<span class="string">&quot;解密后的字符串为：&quot;</span>&lt;&lt;endl;</span><br><span class="line">            cout&lt;&lt;s&lt;&lt;endl;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            cout&lt;&lt;<span class="string">&quot;没有找到你的要求&quot;</span>&lt;&lt;endl;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">while</span>(!(op==<span class="string">&#x27;e&#x27;</span>||op==<span class="string">&#x27;d&#x27;</span>));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>Hill密码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">frees</span><span class="params">(<span class="keyword">int</span> n,<span class="keyword">int</span>** mats)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++) <span class="built_in">free</span>(mats[i]);</span><br><span class="line">    <span class="built_in">free</span>(mats);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">inpu</span><span class="params">(<span class="keyword">int</span> n,<span class="keyword">int</span> **mats)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n;j++)&#123;</span><br><span class="line">            cin&gt;&gt;mats[i][j];</span><br><span class="line">            mats[i][j]%=<span class="number">26</span>;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">det</span><span class="params">(<span class="keyword">int</span> n,<span class="keyword">int</span> **mats)</span></span>&#123;<span class="comment">//计算行列式</span></span><br><span class="line">    <span class="keyword">if</span>(n==<span class="number">1</span>) <span class="keyword">return</span> mats[<span class="number">0</span>][<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">int</span> sum=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> **cp=(<span class="keyword">int</span>**)<span class="built_in">malloc</span>((n<span class="number">-1</span>)*<span class="built_in"><span class="keyword">sizeof</span></span>(<span class="keyword">int</span>*));</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n<span class="number">-1</span>;i++) cp[i]=(<span class="keyword">int</span>*)<span class="built_in">malloc</span>((n<span class="number">-1</span>)*<span class="built_in"><span class="keyword">sizeof</span></span>(<span class="keyword">int</span>));</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;<span class="comment">//主元,消去第一列</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n<span class="number">-1</span>;j++)&#123;<span class="comment">//行</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">0</span>;k&lt;n<span class="number">-1</span>;k++)<span class="comment">//列</span></span><br><span class="line">            cp[j][k]=mats[j+(j&gt;=i)][k+<span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(i%<span class="number">2</span>==<span class="number">0</span>) sum+=mats[i][<span class="number">0</span>]*<span class="built_in">det</span>(n<span class="number">-1</span>,cp);</span><br><span class="line">        <span class="keyword">else</span> sum-=mats[i][<span class="number">0</span>]*<span class="built_in">det</span>(n<span class="number">-1</span>,cp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">frees</span>(n<span class="number">-1</span>,cp);</span><br><span class="line">    <span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">getInv</span><span class="params">(<span class="keyword">int</span> n,<span class="keyword">int</span>** mat)</span></span>&#123;<span class="comment">//高斯消元求逆矩阵</span></span><br><span class="line">    <span class="keyword">int</span>** a=(<span class="keyword">int</span>**)<span class="built_in">malloc</span>(n*<span class="built_in"><span class="keyword">sizeof</span></span>(<span class="keyword">int</span>*));</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;<span class="comment">//增广矩阵</span></span><br><span class="line">        a[i]=(<span class="keyword">int</span>*)<span class="built_in">malloc</span>(<span class="number">2</span>*n*<span class="built_in"><span class="keyword">sizeof</span></span>(<span class="keyword">int</span>));</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n;j++) a[i][j]=mat[i][j],a[i][j+n]=<span class="number">0</span>;</span><br><span class="line">        a[i][i+n]=<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">        <span class="keyword">int</span> p=i;<span class="comment">//主元</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=i+<span class="number">1</span>;j&lt;n;j++)</span><br><span class="line">        <span class="keyword">if</span>(a[j][i]&gt;a[p][i]) p=j;<span class="comment">//找到主元最大行</span></span><br><span class="line">        <span class="built_in">swap</span>(a[i],a[p]);</span><br><span class="line">        <span class="keyword">if</span>(!a[i][i]) <span class="keyword">return</span> <span class="number">0</span>;<span class="comment">//无d逆矩阵</span></span><br><span class="line">        <span class="keyword">int</span> inv=<span class="number">0</span>;<span class="comment">//暴力求a[i][i]的逆元</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> p=<span class="number">1</span>;p&lt;<span class="number">26</span>;p++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(p*a[i][i]%<span class="number">26</span>==<span class="number">1</span>)&#123;</span><br><span class="line">                inv=p;<span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n;j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i==j) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">int</span> rate=a[j][i]*inv%<span class="number">26</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> k=i;k&lt;<span class="number">2</span>*n;k++)&#123;</span><br><span class="line">                a[j][k]=a[j][k]-rate*a[i][k];</span><br><span class="line">                a[j][k]=(a[j][k]%<span class="number">26</span>+<span class="number">26</span>)%<span class="number">26</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;<span class="number">2</span>*n;j++) a[i][j]=a[i][j]*inv%<span class="number">26</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=n;j&lt;<span class="number">2</span>*n;j++) mat[i][j-n]=a[i][j];</span><br><span class="line">        <span class="built_in">free</span>(a[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">free</span>(a);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getNode</span><span class="params">(<span class="keyword">char</span> x)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="string">&#x27;A&#x27;</span>&lt;=x&amp;&amp;x&lt;=<span class="string">&#x27;Z&#x27;</span>) <span class="keyword">return</span> x-<span class="string">&#x27;A&#x27;</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> x-<span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">string <span class="title">mul</span><span class="params">(string s,<span class="keyword">int</span> n,<span class="keyword">int</span> **mat)</span></span>&#123;</span><br><span class="line">    string ans;ans.<span class="built_in">clear</span>();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;s.<span class="built_in">size</span>()/n;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n;j++)&#123;</span><br><span class="line">            <span class="keyword">int</span> now=<span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">0</span>;k&lt;n;k++)&#123;</span><br><span class="line">                now+=<span class="built_in">getNode</span>(s[n*i+k])*mat[k][j]%<span class="number">26</span>;</span><br><span class="line">                now%=<span class="number">26</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(<span class="string">&#x27;A&#x27;</span>&lt;=s[n*i+j]&amp;&amp;s[n*i+j]&lt;=<span class="string">&#x27;Z&#x27;</span>) ans.<span class="built_in">push_back</span>(now+<span class="string">&#x27;A&#x27;</span>);</span><br><span class="line">            <span class="keyword">else</span> ans.<span class="built_in">push_back</span>(now+<span class="string">&#x27;a&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> op=<span class="string">&#x27;x&#x27;</span>;</span><br><span class="line">    <span class="keyword">do</span>&#123;</span><br><span class="line">        cout&lt;&lt;<span class="string">&quot;加密输入e,解密输入d:&quot;</span>&lt;&lt;endl;</span><br><span class="line">        cin&gt;&gt;op;</span><br><span class="line">        <span class="keyword">if</span>(op==<span class="string">&#x27;e&#x27;</span>)&#123;</span><br><span class="line">            cout&lt;&lt;<span class="string">&quot;请输入矩阵的阶&quot;</span>&lt;&lt;endl;</span><br><span class="line">            <span class="keyword">int</span> n;cin&gt;&gt;n;</span><br><span class="line">            <span class="keyword">int</span> **key=(<span class="keyword">int</span>**)<span class="built_in">malloc</span>(n*<span class="built_in"><span class="keyword">sizeof</span></span>(<span class="keyword">int</span>*));</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++) key[i]=(<span class="keyword">int</span>*)<span class="built_in">malloc</span>(n*<span class="built_in"><span class="keyword">sizeof</span></span>(<span class="keyword">int</span>));</span><br><span class="line">            cout&lt;&lt;<span class="string">&quot;请输入&quot;</span>&lt;&lt;n&lt;&lt;<span class="string">&quot;阶密钥矩阵\n&quot;</span>;</span><br><span class="line">            <span class="built_in">inpu</span>(n,key);</span><br><span class="line">            <span class="keyword">while</span>(!<span class="built_in">det</span>(n,key))&#123;<span class="comment">//行列式为0，不存在逆矩阵</span></span><br><span class="line">                cout&lt;&lt;<span class="string">&quot;密钥矩阵无逆矩阵，请重新输入&quot;</span>&lt;&lt;endl;</span><br><span class="line">                <span class="built_in">inpu</span>(n,key);</span><br><span class="line">            &#125;</span><br><span class="line">            cout&lt;&lt;<span class="string">&quot;请输入加密的字符串：&quot;</span>&lt;&lt;endl;</span><br><span class="line">            string s;cin&gt;&gt;s;</span><br><span class="line">            <span class="keyword">if</span>(s.<span class="built_in">size</span>()%n!=<span class="number">0</span>)&#123;</span><br><span class="line">                <span class="keyword">int</span> times=n-s.<span class="built_in">size</span>()%n;<span class="comment">//字符串长度不够则拿最后一个字母填充</span></span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;times;i++) s.<span class="built_in">push_back</span>(s.<span class="built_in">back</span>());</span><br><span class="line">            &#125;</span><br><span class="line">            cout&lt;&lt;<span class="string">&quot;加密后的字符串为：&quot;</span>&lt;&lt;endl;</span><br><span class="line">            cout&lt;&lt;<span class="built_in">mul</span>(s,n,key)&lt;&lt;endl;</span><br><span class="line">            <span class="built_in">frees</span>(n,key);</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(op==<span class="string">&#x27;d&#x27;</span>)&#123;</span><br><span class="line">            cout&lt;&lt;<span class="string">&quot;请输入矩阵的阶&quot;</span>&lt;&lt;endl;</span><br><span class="line">            <span class="keyword">int</span> n;cin&gt;&gt;n;</span><br><span class="line">            <span class="keyword">int</span> **key=(<span class="keyword">int</span>**)<span class="built_in">malloc</span>(n*<span class="built_in"><span class="keyword">sizeof</span></span>(<span class="keyword">int</span>*));</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++) key[i]=(<span class="keyword">int</span>*)<span class="built_in">malloc</span>(n*<span class="built_in"><span class="keyword">sizeof</span></span>(<span class="keyword">int</span>));</span><br><span class="line">            cout&lt;&lt;<span class="string">&quot;请输入&quot;</span>&lt;&lt;n&lt;&lt;<span class="string">&quot;阶密钥矩阵\n&quot;</span>;</span><br><span class="line">            <span class="built_in">inpu</span>(n,key);</span><br><span class="line">            <span class="keyword">while</span>(!<span class="built_in">getInv</span>(n,key))&#123;<span class="comment">//不存在逆矩阵,重新输入</span></span><br><span class="line">                cout&lt;&lt;<span class="string">&quot;密钥矩阵无逆矩阵，请重新输入&quot;</span>&lt;&lt;endl;</span><br><span class="line">                <span class="built_in">inpu</span>(n,key);</span><br><span class="line">            &#125;</span><br><span class="line">            cout&lt;&lt;<span class="string">&quot;请输入解密的字符串：&quot;</span>&lt;&lt;endl;</span><br><span class="line">            string s;cin&gt;&gt;s;</span><br><span class="line">            <span class="keyword">while</span>(s.<span class="built_in">size</span>()%n!=<span class="number">0</span>)&#123;</span><br><span class="line">                cout&lt;&lt;<span class="string">&quot;字符串长度应该是&quot;</span>&lt;&lt;n&lt;&lt;<span class="string">&quot;的倍数&quot;</span>&lt;&lt;endl;</span><br><span class="line">                cin&gt;&gt;s;</span><br><span class="line">            &#125;</span><br><span class="line">            cout&lt;&lt;<span class="string">&quot;解密后的字符串为：&quot;</span>&lt;&lt;endl;</span><br><span class="line">            cout&lt;&lt;<span class="built_in">mul</span>(s,n,key)&lt;&lt;endl;</span><br><span class="line">            <span class="built_in">frees</span>(n,key);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            cout&lt;&lt;<span class="string">&quot;没有找到你的要求&quot;</span>&lt;&lt;endl;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">while</span>(!(op==<span class="string">&#x27;e&#x27;</span>||op==<span class="string">&#x27;d&#x27;</span>));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/10/09/%E5%8F%A4%E5%85%B8%E5%AF%86%E7%A0%81Caesar-Playfair-Hill%E5%8A%A0%E5%AF%86%E8%A7%A3%E5%AF%86%E7%9A%84%E5%AE%9E%E7%8E%B0/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/10/07/%E5%9F%BA%E4%BA%8Efltk%E7%9A%84%E5%9B%BE%E5%BD%A2%E5%8C%96%E5%8A%A0%E5%AF%86%E8%BD%AF%E4%BB%B6/" class="archive-article-date">
-  	<time datetime="2021-10-07T06:49:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-10-07</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2021/10/07/%E5%9F%BA%E4%BA%8Efltk%E7%9A%84%E5%9B%BE%E5%BD%A2%E5%8C%96%E5%8A%A0%E5%AF%86%E8%BD%AF%E4%BB%B6/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">基于fltk的图形化加密软件</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/10/07/%E5%9F%BA%E4%BA%8Efltk%E7%9A%84%E5%9B%BE%E5%BD%A2%E5%8C%96%E5%8A%A0%E5%AF%86%E8%BD%AF%E4%BB%B6/">基于fltk的图形化加密软件</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/10/05/hello-world/" class="archive-article-date">
-  	<time datetime="2021-10-05T07:15:24.850Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-10-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/10/05/hello-world/">Hello World</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
 
 
           </div>
@@ -269,8 +380,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
