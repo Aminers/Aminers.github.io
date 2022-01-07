@@ -511,6 +511,18 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Fl::<span class="built_in">run</span>();</span><br></pre></td></tr></table></figure>
 
 
+
+<ul>
+<li>6.附加操作</li>
+</ul>
+<p>如果想实现点击窗口1的按钮后，窗口1消失变成窗口2怎么操作？</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">windows2 = <span class="keyword">new</span> <span class="built_in">Fl_Window</span>(<span class="number">200</span>, <span class="number">100</span>);</span><br><span class="line">windows1 = <span class="keyword">new</span> <span class="built_in">Fl_Window</span>(<span class="number">300</span>, <span class="number">455</span>);</span><br></pre></td></tr></table></figure>
+
+<p>创建的时候，第一个出现的以最后一个窗口为准。所以windows1放到最后。</p>
+<p>之后在切换的按钮的回调函数中加上。表示隐藏窗口1，展示窗口2。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">windows1-&gt;<span class="built_in">hide</span>(); windows2-&gt;<span class="built_in">show</span>();</span><br></pre></td></tr></table></figure>
+
+
       
 
       
@@ -637,7 +649,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2021 John Doe
+    		&copy; 2022 John Doe
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
